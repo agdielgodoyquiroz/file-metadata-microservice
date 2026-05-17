@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const app = express();
 
-const upload = multer({ dest: 'uploads/' });
+const upload = multer();
 
 app.use(cors());
 app.use(express.json());
@@ -24,12 +24,10 @@ app.post('/api/fileanalyse', upload.single('upfile'), function(req, res) {
     });
   }
 
-  const { originalname, mimetype, size } = req.file;
-
   res.json({
-    name: originalname,
-    type: mimetype,
-    size: size
+    name: req.file.originalname,
+    type: req.file.mimetype,
+    size: req.file.size
   });
 
 });
