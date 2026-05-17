@@ -1,21 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>File Metadata Microservice</title>
-</head>
-<body>
+<form action="/api/fileanalyse"
+      method="POST"
+      enctype="multipart/form-data">
 
-  <h1>Upload a File</h1>
+  <input type="file" name="upfile">
+  <input type="submit" value="Upload">
 
-  <form action="/api/fileanalyse"
-        method="POST"
-        enctype="multipart/form-data">
-
-    <input type="file" name="upfile">
-
-    <input type="submit" value="Upload">
-
-  </form>
-
-</body>
-</html>
+</form>

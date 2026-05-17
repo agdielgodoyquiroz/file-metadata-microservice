@@ -8,8 +8,9 @@ var app = express();
 const upload = multer({ dest: 'uploads/' });
 
 app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 app.use('/public', express.static(process.cwd() + '/public'));
-
+express.urlencoded
 app.get('/', function (req, res) {
   res.sendFile(process.cwd() + '/views/index.html');
 });
