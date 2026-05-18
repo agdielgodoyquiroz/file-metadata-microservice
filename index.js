@@ -8,43 +8,23 @@ app.use(cors());
 
 const upload = multer({ dest: 'uploads/' });
 
-app.get('/', (req, res) => {
+app.get('/', function(req, res) {
   res.send(`
-<!DOCTYPE html>
-<html>
-<head>
-  <title>File Metadata</title>
-</head>
-<body>
-
-  <h1>File Metadata Microservice</h1>
-
-  <form action="/api/fileanalyse" method="post" enctype="multipart/form-data">
-
-    <input type="file" name="upfile">
-    <input type="submit" value="Upload">
-
-  </form>
-
-</body>
-</html>
+    <form action="/api/fileanalyse" method="post" enctype="multipart/form-data">
+      <input type="file" name="upfile">
+      <input type="submit">
+    </form>
   `);
 });
 
-app.post('/api/fileanalyse', upload.single('upfile'), (req, res) => {
-
-  if (!req.file) {
-    return res.json({ error: 'No file uploaded' });
-  }
-
+app.post('/api/fileanalyse', upload.single('upfile'), function(req, res) {
   res.json({
     name: req.file.originalname,
     type: req.file.mimetype,
     size: req.file.size
   });
-
 });
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log('Server running');
+app.listen(process.env.PORT || 3000, function () {
+  console.log('Your app is listening');
 });
