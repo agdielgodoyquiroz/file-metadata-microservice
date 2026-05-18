@@ -13,8 +13,8 @@
     "multer": "^2.1.1"
   },
   "repository": {
-    "type": "git",
-    "url": "https://github.com/agdielgodoyquiroz/file-metadata-microservice/"
+  "type": "git",
+  "url": "https://github.com/agdielgodoyquiroz/file-metadata-microservice"
   },
   "keywords": [
     "node",
