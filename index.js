@@ -1,33 +1,47 @@
-var express = require('express');
-var cors = require('cors');
-var multer = require('multer');
+const express = require('express');
+const cors = require('cors');
+const multer = require('multer');
 
-var app = express();
+const app = express();
+
+const upload = multer({ dest: 'uploads/' });
 
 app.use(cors());
 
-app.use('/public', express.static(process.cwd() + '/public'));
-
 app.get('/', function(req, res) {
-  res.sendFile(process.cwd() + '/views/index.html');
-});
+  res.send(`
+    <!DOCTYPE html>
+    <html>
+      <body>
 
-const upload = multer({ dest: './uploads/' });
+        <form action="/api/fileanalyse"
+              method="post"
+              enctype="multipart/form-data">
+
+          <input type="file" name="upfile" />
+          <input type="submit" />
+
+        </form>
+
+      </body>
+    </html>
+  `);
+});
 
 app.post('/api/fileanalyse', upload.single('upfile'), function(req, res) {
 
   if (!req.file) {
-    return res.send('No file uploaded');
+    return res.json({ error: 'No file uploaded' });
   }
 
   res.json({
     name: req.file.originalname,
     type: req.file.mimetype,
-    size: req.file.size
+    size: Number(req.file.size)
   });
 
 });
 
-var listener = app.listen(process.env.PORT || 3000, function () {
-  console.log('Your app is listening on port ' + listener.address().port);
+const listener = app.listen(process.env.PORT || 3000, function() {
+  console.log('Listening on port ' + listener.address().port);
 });
