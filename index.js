@@ -1,47 +1,48 @@
 const express = require('express');
-const cors = require('cors');
 const multer = require('multer');
+const cors = require('cors');
 
 const app = express();
 
-const upload = multer({ dest: 'uploads/' });
-
 app.use(cors());
 
-app.get('/', function(req, res) {
+const upload = multer({ dest: 'uploads/' });
+
+app.get('/', (req, res) => {
   res.send(`
-    <!DOCTYPE html>
-    <html>
-      <body>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>File Metadata</title>
+</head>
+<body>
 
-        <form action="/api/fileanalyse"
-              method="post"
-              enctype="multipart/form-data">
+  <h1>File Metadata Microservice</h1>
 
-          <input type="file" name="upfile" />
-          <input type="submit" />
+  <form action="/api/fileanalyse" method="post" enctype="multipart/form-data">
 
-        </form>
+    <input type="file" name="upfile">
+    <input type="submit" value="Upload">
 
-      </body>
-    </html>
+  </form>
+
+</body>
+</html>
   `);
 });
 
-app.post('/api/fileanalyse', upload.single('upfile'), function(req, res) {
+app.post('/api/fileanalyse', upload.single('upfile'), (req, res) => {
 
   if (!req.file) {
     return res.json({ error: 'No file uploaded' });
   }
 
   res.json({
-  name: req.file.originalname,
-  type: req.file.mimetype,
-  size: req.file.size
-})
+    name: req.file.originalname,
+    type: req.file.mimetype,
+    size: req.file.size
+  });
 
 });
 
-const listener = app.listen(process.env.PORT || 3000, function() {
-  console.log('Listening on port ' + listener.address().port);
-});
+app.listen(process.env.PORT || 3000);
